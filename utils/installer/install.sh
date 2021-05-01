@@ -14,6 +14,8 @@ installalacrittyfedora() {
 	cargo install alacritty
 	sudo ln -s ~/.cargo/bin/alacritty /usr/bin/alacritty
 	cd
+	curl -O https://raw.githubusercontent.com/tk8226/VimVW/main/utils/installer/.alacritty.yml
+	cp  ~/.alacritty.yml .
 	git clone https://github.com/gpakosz/.tmux.git
 	ln -s -f .tmux/.tmux.conf
 	cp .tmux/.tmux.conf.local .
@@ -86,7 +88,6 @@ installpacker() {
 cloneconfig() {
 	echo "Cloning VimVW configuration"
 	git clone https://github.com/tk8226/vimvw.git ~/.config/nvim
-	cp  ~/.config/nvim/utils/installer/alacritty.yml .
 	# mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.tmp
 	# mv $HOME/.config/nvim/utils/init.lua $HOME/.config/nvim/init.lua
 	nvim -u $HOME/.config/nvim/init.lua +PackerInstall
