@@ -22,8 +22,11 @@ installalacrittyfedora() {
 	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
 }
 installneovimnightly() {
+	cd
 	curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-	echo 'alias n="~/nvim.appimage"' >> ~/.zshrc
+	chmod u+x nvim.appimage
+	sudo ln -s ~/nvim.appimage /usr/bin/nvim
+	echo 'alias n="nvim"' >> ~/.zshrc
 }
 installnodemac() {
 	brew install lua
