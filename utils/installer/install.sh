@@ -21,7 +21,10 @@ installalacrittyfedora() {
 	cp .tmux/.tmux.conf.local .
 	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
 }
-
+installneovimnightly() {
+	curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+	echo 'alias n="~/nvim.appimage"' >> ~/.zshrc
+}
 installnodemac() {
 	brew install lua
 	brew install node
@@ -109,6 +112,14 @@ asktoinstallalacritty() {
 	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
 }
 
+asktoinstallneovimnightly() {
+	echo "NeoVim Nightly not found"
+	echo -n "Would you like to install NeoVim Nightly (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installneovimnightly
+}
+
+
 asktoinstallnode() {
 	echo "node not found"
 	echo -n "Would you like to install node now (y/n)? "
@@ -166,6 +177,9 @@ which zsh >/dev/null && echo "Oh My Zsh installed, moving on..." || asktoinstall
 
 # install alacritty
 which alacritty >/dev/null && echo "Alacritty installed, moving on..." || asktoinstallalacritty
+
+# install neovim nightly
+which n >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
