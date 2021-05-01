@@ -182,7 +182,7 @@ which zsh >/dev/null && echo "Oh My Zsh installed, moving on..." || asktoinstall
 which alacritty >/dev/null && echo "Alacritty installed, moving on..." || asktoinstallalacritty
 
 # install neovim nightly
-which n >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
+which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
