@@ -3,6 +3,23 @@
 set -o nounset # error when referencing undefined variable
 set -o errexit # exit when command fails
 
+installohmyzsh() {
+	sudo dnf install zsh
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
+installalacrittyfedora() {
+	sudo dnf install cmake
+	sudo dnf install cmake freetype-devel fontconfig-devel libxcb-devel g++
+	cargo install alacritty
+	sudo ln -s ~/.cargo/bin/alacritty /usr/bin/alacritty
+	cd
+	git clone https://github.com/gpakosz/.tmux.git
+	ln -s -f .tmux/.tmux.conf
+	cp .tmux/.tmux.conf.local .
+	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
+}
+
 installnodemac() {
 	brew install lua
 	brew install node
@@ -12,6 +29,11 @@ installnodemac() {
 installnodeubuntu() {
 	sudo apt install nodejs
 	sudo apt install npm
+}
+
+installnodefedora() {
+    sudo dnf install -y nodejs 
+    sudo dnf install -y npm
 }
 
 moveoldnvim() {
@@ -25,6 +47,7 @@ installnode() {
 	echo "Installing node..."
 	[ "$(uname)" == "Darwin" ] && installnodemac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installnodeubuntu
+	[ -f "/etc/fedora-release" ] && installnodefedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 	sudo npm i -g neovim
 }
@@ -39,11 +62,15 @@ installpiponubuntu() {
 	sudo apt install python3-pip >/dev/null
 }
 
+installpiponfedora() {
+	sudo dnf install -y pip >/dev/nul
+}
 
 installpip() {
 	echo "Installing pip..."
 	[ "$(uname)" == "Darwin" ] && installpiponmac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installpiponubuntu
+	[ -f "/etc/fedora-release" ] && installpiponfedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 
@@ -59,11 +86,26 @@ installpacker() {
 cloneconfig() {
 	echo "Cloning VimVW configuration"
 	git clone https://github.com/tk8226/vimvw.git ~/.config/nvim
+	cp  ~/.config/nvim/utils/installer/alacritty.yml .
 	# mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.tmp
 	# mv $HOME/.config/nvim/utils/init.lua $HOME/.config/nvim/init.lua
 	nvim -u $HOME/.config/nvim/init.lua +PackerInstall
 	# rm $HOME/.config/nvim/init.lua
 	# mv $HOME/.config/nvim/init.lua.tmp $HOME/.config/nvim/init.lua
+}
+
+asktoinstallohmyzsh() {
+	echo "Oh My Zsh not found"
+	echo -n "Would you like to install Oh My Zsh now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
+}
+
+asktoinstallalacritty() {
+	echo "Alacritty not found"
+	echo -n "Would you like to install Alacrittynow (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
 }
 
 asktoinstallnode() {
@@ -99,9 +141,16 @@ installonubuntu() {
 	npm install -g tree-sitter-cli
 }
 
+installonfedora() {
+    sudo dnf groupinstall "X Software Development"
+    sudo dnf install -y fzf ripgrep ranger
+    pip3 install wheel ueberzug
+}
+
 installextrapackages() {
 	[ "$(uname)" == "Darwin" ] && installonmac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installonubuntu
+	[ -f "/etc/fedora-release" ] && installonfedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 
@@ -110,6 +159,12 @@ echo 'Installing VimVW'
 
 # move old nvim directory if it exists
 [ -d "$HOME/.config/nvim" ] && moveoldnvim
+
+# install ohmyzsh
+which zsh >/dev/null && echo "Oh My Zsh installed, moving on..." || asktoinstallohmyzsh
+
+# install alacritty
+which alacritty >/dev/null && echo "Alacritty installed, moving on..." || asktoinstallalacritty
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
