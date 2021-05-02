@@ -1,14 +1,24 @@
 vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true})
 vim.g.mapleader = ' '
 
+-------------------- MAPPINGS ------------------------------
+vim.api.nvim_set_keymap('n', '<C-s>', ':update<CR>', {noremap = true, silent = true}) 	-- Make <C-s> Save
+vim.api.nvim_set_keymap('i', '<C-s>', '<C-O>:update<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<C-s>', '<C-C>:update<CR>', {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {silent = true})-- better window movement
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {silent = true})
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {silent = true})
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {silent = true})
+
 -- no hl
 vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
 
 -- explorer
-vim.api.nvim_set_keymap('n', '<C-m>', ':RnvimrToggle<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<C-m>', '<C-\\><C-n>:RnvimrToggle<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<C-m>', '<C-O>:update<CR><C-O>:RnvimrToggle<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<C-m>', '<C-C>:update<CR><C-C>:RnvimrToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-A-o>', ':RnvimrToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<C-A-o>', '<C-\\><C-n>:RnvimrToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<C-A-o>', '<C-O>:update<CR><C-O>:RnvimrToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<C-A-o>', '<C-C>:update<CR><C-C>:RnvimrToggle<CR>', {noremap = true, silent = true})
 
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
     vim.g.nvim_tree_bindings = {
@@ -48,11 +58,7 @@ local tree_cb = require'nvim-tree.config'.nvim_tree_callback
       ["q"]              = tree_cb("close"),
     }
 
--- better window movement
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {silent = true})
+
 
 -- TODO fix this
 -- Terminal window navigation
@@ -143,7 +149,4 @@ vim.api.nvim_set_keymap('n', '<A-8>', ':BufferGoto 8<CR>', { noremap = true, sil
 vim.api.nvim_set_keymap('n', '<A-9>', ':BufferLast<CR>', { noremap = true, silent = true })
 
 --------------------------- TELESCOPE -----------------------------------
-vim.api.nvim_set_keymap('n', 'F', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'G', ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'B', ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'H', ':Telescope help_tags<CR>', { noremap = true, silent = true })
+-- In WhichKey

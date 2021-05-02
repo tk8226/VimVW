@@ -25,7 +25,7 @@ let g:which_key_map['/'] = 'comment toggle'
 let g:which_key_map[';'] = [ ':Dashboard'                                      , 'home screen' ]
 let g:which_key_map['?'] = [ ':NvimTreeFindFile'                               , 'find current file' ]
 let g:which_key_map['e'] = [ ':NvimTreeToggle'                                 , 'explorer' ]
-let g:which_key_map['f'] = [ ':Telescope find_files'                           , 'find files' ]
+" let g:which_key_map['f'] = [ ':Telescope find_files'                           , 'find files' ]
 let g:which_key_map['h'] = [ '<C-W>s'                                          , 'split below']
 let g:which_key_map['H'] = [ ':let @/ = ""'                                    , 'no highlight' ]
 let g:which_key_map['r'] = [ ':RnvimrToggle'                                   , 'ranger' ]
@@ -58,6 +58,15 @@ let g:which_key_map.d = {
       \ 's' : ['DebugStart'                    , 'start'],
       \ }
 
+" f is for Telescope
+let g:which_key_map.f = {
+    \ 'name': '+telescope',
+    \ 'f' : [':Telescope find_files'  	, 'find files'],
+    \ 'g' : [':Telescope live_grep'   	, 'live grep'],
+    \ 'b' : [':Telescope buffers'         	, 'buffers'],
+    \ 'h' : [':Telescope help_tags'          , 'help tags'],
+    \ }
+    
 " F is for fold
 let g:which_key_map.F = {
     \ 'name': '+fold',
