@@ -66,13 +66,14 @@ return require("packer").startup(
         -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
         use {"lewis6991/gitsigns.nvim", opt = true}
         use {"liuchengxu/vim-which-key", opt = true}
-        use {"ChristianChiarulli/dashboard-nvim", opt = true}
+        -- use {"ChristianChiarulli/dashboard-nvim", opt = true}
         use {"windwp/nvim-autopairs", opt = true}
         use {"terrortylor/nvim-comment", opt = true}
         use {"kevinhwang91/nvim-bqf", opt = true}
 
         -- Color
-        use {"christianchiarulli/nvcode-color-schemes.vim", opt = true}
+        -- use {"christianchiarulli/nvcode-color-schemes.vim", opt = true}
+        use {"ghifarit53/tokyonight-vim", opt = true}
 
         -- Icons
         use {"kyazdani42/nvim-web-devicons", opt = true}
@@ -96,11 +97,11 @@ return require("packer").startup(
         require_plugin("nvim-tree.lua")
         require_plugin("gitsigns.nvim")
         require_plugin("vim-which-key")
-        require_plugin("dashboard-nvim")
+        -- require_plugin("dashboard-nvim")
         require_plugin("nvim-autopairs")
         require_plugin("nvim-comment")
         require_plugin("nvim-bqf")
-        require_plugin("nvcode-color-schemes.vim")
+        -- require_plugin("nvcode-color-schemes.vim")
         require_plugin("nvim-web-devicons")
         require_plugin("galaxyline.nvim")
         require_plugin("barbar.nvim")
