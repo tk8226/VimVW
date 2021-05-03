@@ -16,10 +16,15 @@ installohmyzshfedora() {
 	sudo dnf install zsh
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
+installohmyzsharch() {
+	sudo pacman -S zsh
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
 installohmyzsh() {
 	echo "Installing Oh My Zsh..."
 	# [ "$(uname)" == "Darwin" ] && installohmyzshmac
 	# [ -n "$(uname -a | grep Ubuntu)" ] && installohmyzshubuntu
+	[ -f "/etc/arch-release" ] && installohmyzsharch
 	[ -f "/etc/fedora-release" ] && installohmyzshfedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
@@ -43,11 +48,19 @@ installalacrittyfedora() {
 	cp .tmux/.tmux.conf.local .
 	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
 }
+installalacrittyarch() {
+	echo "Alacritty intalled by manual"
+	git clone https://github.com/gpakosz/.tmux.git
+	ln -s -f .tmux/.tmux.conf
+	cp .tmux/.tmux.conf.local .
+	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
+}
 installalacritty() {
 	echo "Installing Alacritty..."
 	# [ "$(uname)" == "Darwin" ] && installalacrittymac
 	# [ -n "$(uname -a | grep Ubuntu)" ] && installalacrittyubuntu
 	[ -f "/etc/fedora-release" ] && installalacrittyfedora
+	[ -f "/etc/arch-release" ] && installalacrittyarch
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 asktoinstallalacritty() {
@@ -74,6 +87,11 @@ installnodefedora() {
     sudo dnf install -y nodejs 
     sudo dnf install -y npm
     sudo npm install --global yarn
+}
+installnodearch() {
+	sudo pacman -S nodejs
+	sudo pacman -S npm
+	sudo npm install --global yarn
 }
 installnode() {
 	echo "Installing node..."
@@ -103,11 +121,15 @@ installpiponubuntu() {
 installpiponfedora() {
 	sudo dnf install -y pip >/dev/nul
 }
+installpiponarch() {
+	pacman -S python-pip
+}
 installpip() {
 	echo "Installing pip..."
 	[ "$(uname)" == "Darwin" ] && installpiponmac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installpiponubuntu
 	[ -f "/etc/fedora-release" ] && installpiponfedora
+	[ -f "/etc/arch-release" ] && installpiponarch
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 asktoinstallpip() {
@@ -129,10 +151,15 @@ installpynvim() {
 # Install NeoVim Nightly
 #
 
-installneovimnightlyfedora() {
-	sudo yarn global add neovim
-	
+installsupportneovimfedora() {
 	sudo yum -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext
+}
+installsupportneovimarch() {
+	sudo pacman -S base-devel cmake unzip ninja tree-sitter
+}
+installneovimnightly() {
+	sudo yarn global add neovim
+
 	cd ~
 	sudo rm -r neovim
 	git clone https://github.com/neovim/neovim
@@ -152,7 +179,9 @@ installneovimnightly() {
 	echo "Installing node..."
 	# [ "$(uname)" == "Darwin" ] && installnodemac
 	# [ -n "$(uname -a | grep Ubuntu)" ] && installnodeubuntu
-	[ -f "/etc/fedora-release" ] && installneovimnightlyfedora
+	[ -f "/etc/fedora-release" ] && installsupportneovimfedora
+	[ -f "/etc/arch-release" ] && installsupportneovimarch
+	installneovimnightlyfedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 asktoinstallneovimnightly() {
@@ -196,13 +225,15 @@ cloneconfig() {
 
 
 
-installonmac() {
-	brew install ripgrep fzf ranger
-	npm install -g tree-sitter-cli
-}
+
 
 pipinstallueberzug() {
 	which pip3 >/dev/null && pip3 install ueberzug || echo "Not installing ueberzug pip not found"
+}
+
+installonmac() {
+	brew install ripgrep fzf ranger
+	npm install -g tree-sitter-cli
 }
 
 installonubuntu() {
@@ -217,6 +248,13 @@ installonfedora() {
     sudo dnf groupinstall "X Software Development"
     sudo dnf install -y fzf ripgrep ranger
     pip3 install wheel ueberzug
+}
+
+installonarch() {
+	sudo pacman -S ripgrep fzf ranger
+	which yay >/dev/null && yay -S python-ueberzug-git || pipinstallueberzug
+	pip3 install neovim-remote
+	npm install -g tree-sitter-cli
 }
 
 installextrapackages() {
