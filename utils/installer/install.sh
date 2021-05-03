@@ -157,7 +157,7 @@ installsupportneovimfedora() {
 installsupportneovimarch() {
 	sudo pacman -S base-devel cmake unzip ninja tree-sitter
 }
-installneovimnightly() {
+installneovimnightlyall() {
 	sudo yarn global add neovim
 
 	cd ~
@@ -181,7 +181,7 @@ installneovimnightly() {
 	# [ -n "$(uname -a | grep Ubuntu)" ] && installnodeubuntu
 	[ -f "/etc/fedora-release" ] && installsupportneovimfedora
 	[ -f "/etc/arch-release" ] && installsupportneovimarch
-	installneovimnightlyfedora
+	installneovimnightlyall
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 asktoinstallneovimnightly() {
