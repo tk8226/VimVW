@@ -3,9 +3,31 @@
 set -o nounset # error when referencing undefined variable
 set -o errexit # exit when command fails
 
-installohmyzsh() {
+moveoldnvim() {
+	echo "Not installing LunarVim"
+	echo "Please move your ~/.config/nvim folder before installing"
+	exit
+}
+
+#
+# Install Alacritty + OhMyZsh + Tmux
+#
+installohmyzshfedora() {
 	sudo dnf install zsh
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+installohmyzsh() {
+	echo "Installing Oh My Zsh..."
+	# [ "$(uname)" == "Darwin" ] && installohmyzshmac
+	# [ -n "$(uname -a | grep Ubuntu)" ] && installohmyzshubuntu
+	[ -f "/etc/fedora-release" ] && installohmyzshfedora
+	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
+}
+asktoinstallohmyzsh() {
+	echo "Oh My Zsh not found"
+	echo -n "Would you like to install Oh My Zsh now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
 }
 
 installalacrittyfedora() {
@@ -21,59 +43,66 @@ installalacrittyfedora() {
 	cp .tmux/.tmux.conf.local .
 	echo 'set-option -g default-shell /bin/zsh' >> ~/.tmux.conf.local
 }
-installneovimnightly() {
-	cd
-	curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-	chmod u+x nvim.appimage
-	sudo ln -s ~/nvim.appimage /usr/bin/nvim
-	echo 'alias n="nvim"' >> ~/.zshrc
+installalacritty() {
+	echo "Installing Alacritty..."
+	# [ "$(uname)" == "Darwin" ] && installalacrittymac
+	# [ -n "$(uname -a | grep Ubuntu)" ] && installalacrittyubuntu
+	[ -f "/etc/fedora-release" ] && installalacrittyfedora
+	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
+asktoinstallalacritty() {
+	echo "Alacritty not found"
+	echo -n "Would you like to install Alacritty now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installalacritty
+}
+
+#
+# Install Node + NPM + Yarn
+#
 installnodemac() {
 	brew install lua
 	brew install node
 	brew install yarn
 }
-
 installnodeubuntu() {
 	sudo apt install nodejs
 	sudo apt install npm
+	sudo npm install --global yarn
 }
-
 installnodefedora() {
     sudo dnf install -y nodejs 
     sudo dnf install -y npm
+    sudo npm install --global yarn
 }
-
-moveoldnvim() {
-	echo "Not installing LunarVim"
-	echo "Please move your ~/.config/nvim folder before installing"
-	exit
-}
-
-
 installnode() {
 	echo "Installing node..."
 	[ "$(uname)" == "Darwin" ] && installnodemac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installnodeubuntu
 	[ -f "/etc/fedora-release" ] && installnodefedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
-	sudo npm i -g neovim
+}
+asktoinstallnode() {
+	echo "node not found"
+	echo -n "Would you like to install node now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installnode
 }
 
+#
+# Install Pip3
+#
 installpiponmac() {
 	sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 	python3 get-pip.py
 	rm get-pip.py
 }
-
 installpiponubuntu() {
 	sudo apt install python3-pip >/dev/null
 }
-
 installpiponfedora() {
 	sudo dnf install -y pip >/dev/nul
 }
-
 installpip() {
 	echo "Installing pip..."
 	[ "$(uname)" == "Darwin" ] && installpiponmac
@@ -81,14 +110,78 @@ installpip() {
 	[ -f "/etc/fedora-release" ] && installpiponfedora
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
+asktoinstallpip() {
+	# echo "pip not found"
+	# echo -n "Would you like to install pip now (y/n)? "
+	# read answer
+	# [ "$answer" != "${answer#[Yy]}" ] && installpip
+	echo "Please install pip3 before continuing with install"
+	exit
+}
 
 installpynvim() {
 	echo "Installing pynvim..."
 	pip3 install pynvim --user
 }
 
+
+#
+# Install NeoVim Nightly
+#
+
+installneovimnightlyfedora() {
+	sudo yarn global add neovim
+	
+	sudo yum -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext
+	cd ~
+	sudo rm -r neovim
+	git clone https://github.com/neovim/neovim
+	cd neovim
+	sudo make CMAKE_BUILD_TYPE=Release install
+	cd ~
+	sudo rm -r neovim
+	
+	# cd
+	# curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+	# chmod u+x nvim.appimage
+	# sudo ln -s ~/nvim.appimage /usr/bin/nvim
+	
+	echo 'alias n="nvim"' >> ~/.zshrc
+}
+installneovimnightly() {
+	echo "Installing node..."
+	# [ "$(uname)" == "Darwin" ] && installnodemac
+	# [ -n "$(uname -a | grep Ubuntu)" ] && installnodeubuntu
+	[ -f "/etc/fedora-release" ] && installneovimnightlyfedora
+	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
+}
+asktoinstallneovimnightly() {
+	echo "NeoVim Nightly not found"
+	echo -n "Would you like to install NeoVim Nightly (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installneovimnightly
+}
+
+#
+# Install Packer NVim
+#
 installpacker() {
 	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+}
+
+#
+# Install Formatters And Linters
+#
+installformattersandlinters() {
+	pip3 install --user flake8
+	pip3 install --user yapf
+	sudo yarn global add prettier
+}
+asktoinstallformatterandlinters(){
+	echo "Formatter And Linters not found"
+	echo -n "Would you like to install Formatter And Linters (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installformattersandlinters
 }
 
 cloneconfig() {
@@ -101,43 +194,7 @@ cloneconfig() {
 	# mv $HOME/.config/nvim/init.lua.tmp $HOME/.config/nvim/init.lua
 }
 
-asktoinstallohmyzsh() {
-	echo "Oh My Zsh not found"
-	echo -n "Would you like to install Oh My Zsh now (y/n)? "
-	read answer
-	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
-}
 
-asktoinstallalacritty() {
-	echo "Alacritty not found"
-	echo -n "Would you like to install Alacrittynow (y/n)? "
-	read answer
-	[ "$answer" != "${answer#[Yy]}" ] && installohmyzsh
-}
-
-asktoinstallneovimnightly() {
-	echo "NeoVim Nightly not found"
-	echo -n "Would you like to install NeoVim Nightly (y/n)? "
-	read answer
-	[ "$answer" != "${answer#[Yy]}" ] && installneovimnightly
-}
-
-
-asktoinstallnode() {
-	echo "node not found"
-	echo -n "Would you like to install node now (y/n)? "
-	read answer
-	[ "$answer" != "${answer#[Yy]}" ] && installnode
-}
-
-asktoinstallpip() {
-	# echo "pip not found"
-	# echo -n "Would you like to install pip now (y/n)? "
-	# read answer
-	# [ "$answer" != "${answer#[Yy]}" ] && installpip
-	echo "Please install pip3 before continuing with install"
-	exit
-}
 
 installonmac() {
 	brew install ripgrep fzf ranger
@@ -181,17 +238,23 @@ which zsh >/dev/null && echo "Oh My Zsh installed, moving on..." || asktoinstall
 # install alacritty
 which alacritty >/dev/null && echo "Alacritty installed, moving on..." || asktoinstallalacritty
 
-# install neovim nightly
-which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
-
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
+
+# install pynvim
+pip3 list | grep pynvim >/dev/null && echo "pynvim installed, moving on..." || installpynvim
 
 # install node and neovim support
 which node >/dev/null && echo "node installed, moving on..." || asktoinstallnode
 
-# install pynvim
-pip3 list | grep pynvim >/dev/null && echo "pynvim installed, moving on..." || installpynvim
+# install neovim nightly
+which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
+
+# install formatters and linters
+asktoinstallformatterandlinters
+
+# install extra packages
+installextrapackages
 
 if [ -a "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
 	echo 'packer already installed'

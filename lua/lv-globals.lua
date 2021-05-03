@@ -1,68 +1,59 @@
 O = {
     auto_close_tree = 0,
     auto_complete = true,
-    colorscheme = 'lunar',
+    colorscheme = 'tokyonight',
     hidden_files = true,
     wrap_lines = false,
-    number = true,
-    relative_number = true,
     shell = 'zsh',
 
     -- @usage pass a table with your desired languages
     treesitter = {
         ensure_installed = "all",
         ignore_install = {"haskell"},
-        highlight = {enabled = true},
-        playground = {enabled = true},
-        rainbow = {enabled = false}
+        highlight = {enabled = true}
     },
 
     database = {save_location = '~/.config/nvcode_db', auto_execute = 1},
+    
     python = {
-        linter = '',
-        -- @usage can be 'yapf', 'black'
-        formatter = '',
-        autoformat = false,
-        isort = false,
+        formatter = 'yapf',
+        autoformat = true,
+        isort = true,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
-    dart = {sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'},
+    
     lua = {
-        -- @usage can be 'lua-format'
-        formatter = '',
-        autoformat = false,
+        formatter = 'lua-format',
+        autoformat = true,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
+    
     sh = {
         -- @usage can be 'shellcheck'
         linter = '',
-        -- @usage can be 'shfmt'
-        formatter = '',
-        autoformat = false,
+        formatter = 'shfmt',
+        autoformat = true,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
+    
+    -- javascript, typescript, javascriptreact, typescriptreact
     tsserver = {
         -- @usage can be 'eslint'
-        linter = '',
-        -- @usage can be 'prettier'
-        formatter = '',
-        autoformat = false,
+        linter = nil,
+        formatter = 'prettier',
+        autoformat = true,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
+    
     json = {
         -- @usage can be 'prettier'
         formatter = '',
-        autoformat = false,
+        autoformat = true,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
+    
     tailwindls = {filetypes = {'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}},
-    clang = {diagnostics = {virtual_text = true, signs = true, underline = true}},
-	ruby = {
-		diagnostics = {virtualtext = true, signs = true, underline = true},
-		filetypes = {'rb', 'erb', 'rakefile'}
-	}
-    -- css = {formatter = '', autoformat = false, virtual_text = true},
-    -- json = {formatter = '', autoformat = false, virtual_text = true}
+
 }
 
 
