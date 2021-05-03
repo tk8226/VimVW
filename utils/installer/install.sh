@@ -81,17 +81,14 @@ installnodemac() {
 installnodeubuntu() {
 	sudo apt install nodejs
 	sudo apt install npm
-	sudo npm install --global yarn
 }
 installnodefedora() {
     sudo dnf install -y nodejs 
     sudo dnf install -y npm
-    sudo npm install --global yarn
 }
 installnodearch() {
 	sudo pacman -S nodejs
 	sudo pacman -S npm
-	sudo npm install --global yarn
 }
 installnode() {
 	echo "Installing node..."
@@ -105,6 +102,17 @@ asktoinstallnode() {
 	echo -n "Would you like to install node now (y/n)? "
 	read answer
 	[ "$answer" != "${answer#[Yy]}" ] && installnode
+}
+
+installyarn() {
+	echo "Installing yarn..."
+	sudo npm install --global yarn
+}
+asktoinstallyarn() {
+	echo "yarn not found"
+	echo -n "Would you like to install yarn now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installyarn
 }
 
 #
@@ -132,13 +140,16 @@ installpip() {
 	[ -f "/etc/arch-release" ] && installpiponarch
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
-asktoinstallpip() {
-	# echo "pip not found"
-	# echo -n "Would you like to install pip now (y/n)? "
-	# read answer
-	# [ "$answer" != "${answer#[Yy]}" ] && installpip
+returnifnotinstallpip3(){
 	echo "Please install pip3 before continuing with install"
 	exit
+}
+asktoinstallpip() {
+	echo "pip not found"
+	echo -n "Would you like to install pip now (y/n)? "
+	read answer
+	[ "$answer" != "${answer#[Yy]}" ] && installpip || returnifnotinstallpip3
+	
 }
 
 installpynvim() {
@@ -161,12 +172,12 @@ installneovimnightlyall() {
 	sudo yarn global add neovim
 
 	cd ~
-	sudo rm -r neovim
+	sudo rm -rf neovim
 	git clone https://github.com/neovim/neovim
 	cd neovim
 	sudo make CMAKE_BUILD_TYPE=Release install
 	cd ~
-	sudo rm -r neovim
+	sudo rm -rf neovim
 	
 	# cd
 	# curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
@@ -284,6 +295,10 @@ pip3 list | grep pynvim >/dev/null && echo "pynvim installed, moving on..." || i
 
 # install node and neovim support
 which node >/dev/null && echo "node installed, moving on..." || asktoinstallnode
+
+
+# install yarn and neovim support
+which yarn >/dev/null && echo "yarn installed, moving on..." || asktoinstallyarn
 
 # install neovim nightly
 which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
