@@ -1,10 +1,10 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
-shell:
-  #program: /bin/zsh
-  #args:
-    #- -l
-    #- -c
-    #- "tmux"
+# shell:
+  # program: /bin/zsh
+  # args:
+    # - -l
+    # - -c
+    # - "tmux"
 
 # Colors (Monokai Pro)
 colors:
