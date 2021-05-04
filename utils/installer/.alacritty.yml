@@ -91,17 +91,9 @@ font:
     # Font family
     family: "monospace"
     style: Regular
- bold:
-    # Font family
-    family: "monospace"
-    style: Bold
- italic:
-    # Font family
-    family: "monospace"
-    style: Italic
 
   # Point size
-  size: 160
+  size: 16
 
   ligatures: true
   
