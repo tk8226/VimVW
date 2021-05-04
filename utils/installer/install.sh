@@ -178,6 +178,9 @@ installneovimnightlyall() {
 	sudo rm -rf neovim
 
 	echo 'alias n="nvim"' >> ~/.zshrc
+	
+	# install extra packages
+	installextrapackages
 }
 installneovimnightly() {
 	echo "Installing node..."
@@ -256,7 +259,7 @@ installonfedora() {
 
 installonarch() {
 	sudo pacman -S ripgrep fzf ranger
-	which yay >/dev/null && yay -S python-ueberzug-git || pipinstallueberzug
+	sudo pacman -S ueberzug
 	pip3 install neovim-remote
 	npm install -g tree-sitter-cli
 }
@@ -265,6 +268,7 @@ installextrapackages() {
 	[ "$(uname)" == "Darwin" ] && installonmac
 	[ -n "$(uname -a | grep Ubuntu)" ] && installonubuntu
 	[ -f "/etc/fedora-release" ] && installonfedora
+	[ -f "/etc/arch-release" ] && installonarch
 	[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ] && echo "Windows not currently supported"
 }
 
@@ -298,9 +302,6 @@ which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoi
 
 # install formatters and linters
 # asktoinstallformatterandlinters
-
-# install extra packages
-installextrapackages
 
 if [ -a "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
 	echo 'packer already installed'
