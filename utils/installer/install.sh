@@ -169,8 +169,6 @@ installsupportneovimarch() {
 	sudo pacman -S base-devel cmake unzip ninja tree-sitter
 }
 installneovimnightlyall() {
-	sudo yarn global add neovim
-
 	cd ~
 	sudo rm -rf neovim
 	git clone https://github.com/neovim/neovim
@@ -178,12 +176,7 @@ installneovimnightlyall() {
 	sudo make CMAKE_BUILD_TYPE=Release install
 	cd ~
 	sudo rm -rf neovim
-	
-	# cd
-	# curl -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-	# chmod u+x nvim.appimage
-	# sudo ln -s ~/nvim.appimage /usr/bin/nvim
-	
+
 	echo 'alias n="nvim"' >> ~/.zshrc
 }
 installneovimnightly() {
@@ -214,7 +207,7 @@ installpacker() {
 #
 installformattersandlinters() {
 	pip3 install --user flake8
-	pip3 install --user yapf
+	pip3 install --user yapfsystemctl hibernate
 	sudo yarn global add prettier
 }
 asktoinstallformatterandlinters(){
@@ -304,7 +297,7 @@ which yarn >/dev/null && echo "yarn installed, moving on..." || asktoinstallyarn
 which nvim >/dev/null && echo "NeoVim Nightly installed, moving on..." || asktoinstallneovimnightly
 
 # install formatters and linters
-asktoinstallformatterandlinters
+# asktoinstallformatterandlinters
 
 # install extra packages
 installextrapackages
