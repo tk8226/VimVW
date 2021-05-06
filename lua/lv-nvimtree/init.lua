@@ -22,9 +22,8 @@ vim.g.nvim_tree_auto_close = O.auto_close_tree -- 0 by default, closes the tree 
 vim.g.nvim_tree_auto_ignore_ft = 'startify' --empty by default, don't auto open tree on specific filetypes.
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
     vim.g.nvim_tree_bindings = {
-      -- ["<CR>"] = ":YourVimFunction()<cr>",
-      -- ["u"] = ":lua require'some_module'.some_function()<cr>",
-
+      
+    }
 -- vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1}
 vim.g.nvim_tree_icons = {
     default = '',

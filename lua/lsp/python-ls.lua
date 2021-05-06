@@ -8,7 +8,6 @@ require'lspconfig'.pyright.setup {
             signs = O.python.diagnostics.signs,
             underline = O.python.diagnostics.underline,
             update_in_insert = true
-
         })
     },
 	 settings = {
