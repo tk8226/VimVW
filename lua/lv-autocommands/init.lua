@@ -13,8 +13,8 @@ local typescriptreact_autoformat = {'BufWritePre', '*.tsx', 'lua vim.lsp.buf.for
 if O.tsserver.autoformat then
     table.insert(auto_formatters, javascript_autoformat)
     table.insert(auto_formatters, javascriptreact_autoformat)
-    table.insert(auto_formatters, typescript_autoformat)
-    table.insert(auto_formatters, typescriptreact_autoformat)
+	table.insert(auto_formatters, typescript_autoformat)
+	table.insert(auto_formatters, typescriptreact_autoformat)
 end
 
 local lua_format = {'BufWritePre', '*.lua', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
@@ -22,6 +22,9 @@ if O.lua.autoformat then table.insert(auto_formatters, lua_format) end
 
 local json_format = {'BufWritePre', '*.json', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
 if O.json.autoformat then table.insert(auto_formatters, json_format) end
+
+local ruby_format = {'BufWritePre', '*.rb', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
+if O.ruby.autoformat then table.insert(auto_formatters, ruby_format) end
 
 utils.define_augroups({
     _general_settings = {

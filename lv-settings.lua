@@ -1,5 +1,6 @@
 --[[
 O is the global options object
+
 Formatters and linters should be
 filled in as strings with either
 a global executable or a path to
@@ -8,9 +9,13 @@ an executable
 
 -- general
 O.auto_complete = true
-O.colorscheme = 'lunar'
+O.colorscheme = 'tokyonight'
 O.auto_close_tree = 0
 O.wrap_lines = false
+
+-- dashboard 
+-- O.dashboard.custom_header = {""}
+-- O.dashboard.footer = {""}
 
 -- if you don't want all the parsers change this to a table of the ones you want
 O.treesitter.ensure_installed = "all"
@@ -33,6 +38,9 @@ O.python.autoformat = true
 O.python.diagnostics.virtual_text = true
 O.python.diagnostics.signs = true
 O.python.diagnostics.underline = true
+O.python.analysis.type_checking = "off"
+O.python.analysis.auto_search_paths = true
+O.python.analysis.use_library_code_types = true
 
 -- lua
 -- TODO look into stylua

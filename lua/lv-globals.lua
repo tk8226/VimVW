@@ -4,52 +4,62 @@ O = {
     colorscheme = 'tokyonight',
     hidden_files = true,
     wrap_lines = false,
+    number = true,
+    relative_number = true,
     shell = 'zsh',
 
     -- @usage pass a table with your desired languages
     treesitter = {
         ensure_installed = "all",
         ignore_install = {"haskell"},
-        highlight = {enabled = true}
+        highlight = {enabled = true},
+        playground = {enabled = true},
+        rainbow = {enabled = false}
     },
 
     database = {save_location = '~/.config/nvcode_db', auto_execute = 1},
     
     python = {
-        formatter = 'yapf',
-        autoformat = true,
-        isort = true,
-        diagnostics = {virtual_text = true, signs = true, underline = true}
+        linter = '',
+        -- @usage can be 'yapf', 'black'
+        formatter = '',
+        autoformat = false,
+        isort = false,
+        diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true},
+		analysis = {type_checking = "basic", auto_search_paths = true, use_library_code_types = true}
     },
     
     lua = {
-        formatter = 'lua-format',
-        autoformat = true,
-        diagnostics = {virtual_text = true, signs = true, underline = true}
+        -- @usage can be 'lua-format'
+        formatter = '',
+        autoformat = false,
+        diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },
     
     sh = {
         -- @usage can be 'shellcheck'
         linter = '',
-        formatter = 'shfmt',
-        autoformat = true,
-        diagnostics = {virtual_text = true, signs = true, underline = true}
+        -- @usage can be 'shfmt'
+        formatter = '',
+        autoformat = false,
+        diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },
     
     -- javascript, typescript, javascriptreact, typescriptreact
     tsserver = {
         -- @usage can be 'eslint'
-        linter = nil,
-        formatter = 'prettier',
-        autoformat = true,
-        diagnostics = {virtual_text = true, signs = true, underline = true}
+        linter = '',
+        -- @usage can be 'prettier'
+        formatter = '',
+        autoformat = false,
+        diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },
     
     json = {
         -- @usage can be 'prettier'
         formatter = '',
-        autoformat = true,
-        diagnostics = {virtual_text = true, signs = true, underline = true}
+        autoformat = false,
+        diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },
     
     tailwindls = {filetypes = {'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}},

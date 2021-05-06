@@ -45,6 +45,7 @@ return require("packer").startup(
         use {"nvim-lua/popup.nvim", opt = true}
         use {"nvim-lua/plenary.nvim", opt = true}
         use {"nvim-telescope/telescope.nvim", opt = true}
+        use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
 
         -- Debugging
         use {"mfussenegger/nvim-dap", opt = true}
@@ -59,7 +60,7 @@ return require("packer").startup(
         use {"windwp/nvim-ts-autotag", opt = true}
 
         -- Explorer
-        use "kyazdani42/nvim-tree.lua"
+        use {"kyazdani42/nvim-tree.lua", opt = true}
         -- TODO remove when open on dir is supported by nvimtree
         use "kevinhwang91/rnvimr"
 
@@ -73,8 +74,9 @@ return require("packer").startup(
         use {"kevinhwang91/nvim-bqf", opt = true}
 
         -- Color
-        -- use {"christianchiarulli/nvcode-color-schemes.vim", opt = true}
-        use {"ghifarit53/tokyonight-vim", opt = true}
+        use {"christianchiarulli/nvcode-color-schemes.vim", opt = true}
+		use {'folke/tokyonight.nvim'}
+		-- use {'sainnhe/sonokai'}
 
         -- Icons
         use {"kyazdani42/nvim-web-devicons", opt = true}
@@ -102,7 +104,7 @@ return require("packer").startup(
         require_plugin("nvim-autopairs")
         require_plugin("nvim-comment")
         require_plugin("nvim-bqf")
-        -- require_plugin("nvcode-color-schemes.vim")
+        require_plugin("nvcode-color-schemes.vim")
         require_plugin("nvim-web-devicons")
         require_plugin("galaxyline.nvim")
         require_plugin("barbar.nvim")
