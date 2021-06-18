@@ -1,3 +1,7 @@
+CONFIG_PATH = vim.fn.stdpath('config')
+DATA_PATH = vim.fn.stdpath('data')
+CACHE_PATH = vim.fn.stdpath('cache')
+
 O = {
     auto_close_tree = 0,
     auto_complete = true,
@@ -6,7 +10,10 @@ O = {
     wrap_lines = false,
     number = true,
     relative_number = true,
-    shell = 'zsh',
+    shell = 'bash',
+	timeoutlen = 100,
+    nvim_tree_disable_netrw = 0,
+    extras = false,
 
     -- @usage pass a table with your desired languages
     treesitter = {
@@ -62,11 +69,20 @@ O = {
 		diagnostics = {virtualtext = {spacing = 0, prefix = ""}, signs = true, underline = true},
 		filetypes = {'rb', 'erb', 'rakefile'}
 	},
+    go = {},
     -- css = {formatter = '', autoformat = false, virtual_text = true},
     -- json = {formatter = '', autoformat = false, virtual_text = true}
 
+	dashboard = {
+		custom_header = {
+    '██╗   ██╗███████╗ ██████████╗██╗     ██╗ ██████╗ ██╗     ███████╗ ',
+    '██║   ██║██╔═══██╗╚═══██╔═══╝██║     ██║██╔═══██╗██║     ██╔═══██╗',
+    '██║   ██║██║   ██║    ██║    ██║     ██║██║   ██║██║     ██║   ██║',
+    '╚██╗ ██╔╝██║   ██║    ██║    ╚██╗██╗██╔╝██║   ██║██║     ██║   ██║',
+    ' ╚████╔╝ ███████╔╝    ██║     ╚██╔╗██╔╝ ╚██████╔╝███████╗███████╔╝',
+    '  ╚═══╝  ╚══════╝     ╚═╝      ╚═╝╚══╝   ╚═════╝ ╚══════╝╚══════╝ '
+		},
+		footer= {'vdtworld.com'}
+	}
 }
-
-DATA_PATH = vim.fn.stdpath('data')
-CACHE_PATH = vim.fn.stdpath('cache')
 
